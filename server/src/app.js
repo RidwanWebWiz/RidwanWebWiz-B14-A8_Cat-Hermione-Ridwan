@@ -3,6 +3,11 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 
+// Import Routes
+const eventRoutes = require("./routes/eventRoutes");
+const joinRoutes = require("./routes/joinRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+
 dotenv.config();
 
 const app = express();
@@ -22,6 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "success", message: "ImpactPulse API is running smoothly." });
 });
+
+// Mount API Routes
+app.use("/api/events", eventRoutes);
+app.use("/api", joinRoutes);
+app.use("/api", profileRoutes);
 
 // Error Middleware
 app.use(notFound);
